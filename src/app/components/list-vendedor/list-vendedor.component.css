@@ -1,0 +1,43 @@
+table {
+  width: 100%;
+  min-width: 700px;
+  overflow: scroll;
+  overflow-y:scroll;
+}
+
+div {
+  padding: 1em;
+}
+
+.delete-icon {
+  cursor: pointer;
+}
+
+.edit-icon {
+  cursor: pointer;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@media(max-width: 700px) {
+  div {
+    padding: 0;
+  }
+
+  .table-container {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    overflow: scroll;
+  }
+
+  .container {
+    justify-content: space-around;
+    padding-top: 1em;
+  }
+}

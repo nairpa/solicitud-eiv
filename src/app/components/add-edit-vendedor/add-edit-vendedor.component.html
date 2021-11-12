@@ -1,0 +1,53 @@
+<div class="container">
+  <div class='img-container'>
+    <img src="{{avatarImg ? avatarImg : 'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png'}}" alt='avatar'>
+  </div>
+  <div class='flex-container-img'>
+    <input class='input-file' *ngIf='action === "Editar"' type='file' accept="image/*" (change)="selectImage($event)">
+    <button class='btn-save' *ngIf='action === "Editar"' (click)='postImage(idVendedor)' mat-icon-button>
+      <mat-icon color='primary' aria-hidden="false" aria-label="edit-icon">save</mat-icon>
+    </button>
+  </div>
+  <form [formGroup]="myForm" (submit)='action === "Crear" ? addVendedor(myForm.value) : putVendedor(idVendedor, myForm.value)'>
+    <div class='flex-container'>
+    <mat-form-field appearance="fill">
+      <mat-label>Nombre</mat-label>
+      <input formControlName='nombre' required matInput value='{{vendedorData?.nombre}}'>
+      <mat-error>Este campo es requerido</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Nombre de usuario</mat-label>
+      <input formControlName='usuarioLogin' required matInput value='{{vendedorData?.usuarioLogin}}'>
+      <mat-error>Este campo es requerido</mat-error>
+    </mat-form-field>
+    </div>
+    <mat-form-field appearance="fill">
+      <mat-label>Fecha de nacimiento</mat-label>
+      <input formControlName='fechaNacimiento' [min]='minDate' [max]='maxDate' matInput required [matDatepicker]="picker" value='{{vendedorData?.fechaNacimiento}}'>
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+      <mat-error>Debe seleccionar una fecha de nacimiento</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Localidad</mat-label>
+      <mat-select formControlName='localidadId' required [value]='vendedorData?.localidad?.id'>
+        <mat-option *ngFor="let localidad of localidades" [value]="localidad.id">
+          {{localidad.localidad}}
+        </mat-option>
+      </mat-select>
+      <mat-error>Debe seleccionar una localidad</mat-error>
+    </mat-form-field>
+    <div class='container-check'>
+      <mat-checkbox formControlName='habilitado' class='ma' color='primary' value='{{vendedorData?.habilitado}}'> Habilitado</mat-checkbox>
+    </div>
+    <mat-form-field appearance="fill">
+      <mat-label>Observaciones</mat-label>
+      <textarea formControlName='observaciones' matInput placeholder="Observaciones..." value='{{vendedorData?.observaciones}}'></textarea>
+    </mat-form-field>
+    <div class='flex-container'>
+      <button routerLink='/' mat-raised-button>Cancelar</button>
+      <button type='submit' mat-raised-button color="primary">{{action}}</button>
+    </div>
+  </form>
+</div>
+
