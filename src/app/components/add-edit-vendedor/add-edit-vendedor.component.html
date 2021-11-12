@@ -46,7 +46,7 @@
     </mat-form-field>
     <div class='flex-container'>
       <button routerLink='/' mat-raised-button>Cancelar</button>
-      <button type='submit' mat-raised-button color="primary">{{action}}</button>
+      <button [disabled]="!myForm.valid" type='submit' mat-raised-button color="primary">{{action}}</button>
     </div>
   </form>
 </div>

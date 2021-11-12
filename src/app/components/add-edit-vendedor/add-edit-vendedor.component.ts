@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Observable,tap } from 'rxjs';
 import { Localidad } from 'src/app/models/localidad';
 import { Vendedor } from 'src/app/models/vendedore';
 import { VendedorService } from 'src/app/services/vendedor.service';
@@ -59,7 +60,19 @@ export class AddEditVendedorComponent implements OnInit {
   }
 
   getVendedor() {
-    this._vendedorService.getVendedores().subscribe(v => this.vendedorData = v.filter(v => v.id == this.idVendedor)[0])
+    this._vendedorService.getVendedores()
+      .pipe(tap(v => {
+        this.vendedorData = v.filter(v => v.id == this.idVendedor)[0]
+        this.myForm.patchValue({
+          nombre: this.vendedorData.nombre,
+          usuarioLogin: this.vendedorData.usuarioLogin,
+          fechaNacimiento: this.vendedorData.fechaNacimiento,
+          localidadId: this.vendedorData.localidad.id,
+          habilitado: this.vendedorData.habilitado,
+          observaciones: this.vendedorData.observaciones
+        })
+      }))
+      .subscribe()
   }
 
   getLocalidades() {
