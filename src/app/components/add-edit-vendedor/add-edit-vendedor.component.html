@@ -12,12 +12,12 @@
     <div class='flex-container'>
     <mat-form-field appearance="fill">
       <mat-label>Nombre</mat-label>
-      <input formControlName='nombre' required matInput value='{{vendedorData?.nombre}}'>
+      <input formControlName='nombre' required matInput>
       <mat-error>Este campo es requerido</mat-error>
     </mat-form-field>
     <mat-form-field appearance="fill">
       <mat-label>Nombre de usuario</mat-label>
-      <input formControlName='usuarioLogin' required matInput value='{{vendedorData?.usuarioLogin}}'>
+      <input formControlName='usuarioLogin' required matInput>
       <mat-error>Este campo es requerido</mat-error>
     </mat-form-field>
     </div>
@@ -30,7 +30,7 @@
     </mat-form-field>
     <mat-form-field appearance="fill">
       <mat-label>Localidad</mat-label>
-      <mat-select formControlName='localidadId' required [value]='vendedorData?.localidad?.id'>
+      <mat-select formControlName='localidadId' required>
         <mat-option *ngFor="let localidad of localidades" [value]="localidad.id">
           {{localidad.localidad}}
         </mat-option>
@@ -38,11 +38,11 @@
       <mat-error>Debe seleccionar una localidad</mat-error>
     </mat-form-field>
     <div class='container-check'>
-      <mat-checkbox formControlName='habilitado' class='ma' color='primary' value='{{vendedorData?.habilitado}}'> Habilitado</mat-checkbox>
+      <mat-checkbox formControlName='habilitado' class='ma' color='primary'> Habilitado</mat-checkbox>
     </div>
     <mat-form-field appearance="fill">
       <mat-label>Observaciones</mat-label>
-      <textarea formControlName='observaciones' matInput placeholder="Observaciones..." value='{{vendedorData?.observaciones}}'></textarea>
+      <textarea formControlName='observaciones' matInput placeholder="Observaciones..."></textarea>
     </mat-form-field>
     <div class='flex-container'>
       <button routerLink='/' mat-raised-button>Cancelar</button>
