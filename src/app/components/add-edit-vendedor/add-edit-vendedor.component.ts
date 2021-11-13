@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable,tap } from 'rxjs';
 import { Localidad } from 'src/app/models/localidad';
 import { Vendedor } from 'src/app/models/vendedore';
+import { LocalidadService } from 'src/app/services/localidad.service';
 import { VendedorService } from 'src/app/services/vendedor.service';
 
 class ImageSnippet {
@@ -31,7 +32,8 @@ export class AddEditVendedorComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private _vendedorService: VendedorService,
+    private vendedorService: VendedorService,
+    private localidadService: LocalidadService,
     private router: Router,
     private aRouter: ActivatedRoute,
     public snackBar: MatSnackBar
@@ -55,12 +57,12 @@ export class AddEditVendedorComponent implements OnInit {
     if(this.idVendedor) {
       this.getVendedor()
       this.action = 'Editar'
-      this._vendedorService.getImage(this.idVendedor).subscribe(e => {this.createImageFromBlob(e)})
+      this.vendedorService.getImage(this.idVendedor).subscribe(e => {this.createImageFromBlob(e)})
     }
   }
 
   getVendedor() {
-    this._vendedorService.getVendedores()
+    this.vendedorService.getVendedores()
       .pipe(tap(v => {
         this.vendedorData = v.filter(v => v.id == this.idVendedor)[0]
         this.myForm.patchValue({
@@ -76,18 +78,18 @@ export class AddEditVendedorComponent implements OnInit {
   }
 
   getLocalidades() {
-    this._vendedorService.getLocalidades().subscribe(data => this.localidades = data)
+    this.localidadService.getLocalidades().subscribe(data => this.localidades = data)
   }
 
   addVendedor(vendedor: Vendedor) {
-    if(this.myForm.status === 'INVALID')return;
-    this._vendedorService.addVendedor(vendedor).subscribe()
+    if(!this.myForm.valid)return;
+    this.vendedorService.addVendedor(vendedor).subscribe()
     this.router.navigate(['/'])
   }
 
   putVendedor(id: number, vendedor: Vendedor) {
-    if(this.myForm.status === 'INVALID') return;
-    this._vendedorService.putVendedor(id, vendedor).subscribe()
+    if(!this.myForm.valid) return;
+    this.vendedorService.putVendedor(id, vendedor).subscribe()
     this.router.navigate(['/'])
   }
 
@@ -112,7 +114,7 @@ export class AddEditVendedorComponent implements OnInit {
     reader.addEventListener('load', (event: any) => {
       this.selectedFile = new ImageSnippet(event.target.result, this.file);
 
-      this._vendedorService.postImage(id, this.selectedFile.file).subscribe()
+      this.vendedorService.postImage(id, this.selectedFile.file).subscribe()
     })
     reader.readAsDataURL(this.file);
   }

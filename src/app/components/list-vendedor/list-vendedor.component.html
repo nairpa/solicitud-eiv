@@ -23,7 +23,7 @@
       </ng-container>
       <ng-container matColumnDef="habilitado" >
         <th mat-header-cell *matHeaderCellDef> Habilitado </th>
-        <td mat-cell *matCellDef="let data">{{ data.habilitado }}</td>
+        <td mat-cell *matCellDef="let data">{{ data.habilitado ? 'Si' : 'No'}}</td>
       </ng-container>
       <ng-container matColumnDef="fechaNacimiento" >
         <th mat-header-cell *matHeaderCellDef> Fecha Nacimiento</th>
