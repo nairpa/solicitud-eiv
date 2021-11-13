@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, Observable, of, tap, map } from 'rxjs';
 import { Vendedor } from '../models/vendedore';
-import { Localidad } from '../models/localidad';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
@@ -10,7 +9,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class VendedorService {
 
-  url = `http://localhost:8080/api`
+  url: string = `http://localhost:8080/api`;
   httpOptions = {
     headers: new HttpHeaders({'Content-Type':'application/json'})
   };
@@ -45,11 +44,6 @@ export class VendedorService {
       tap((newVendedor: Vendedor) => this.snackBar.open(`El vendedor con id: ${newVendedor.id} ha sido creado con éxito`, '', {duration: 3000})),
       catchError(this.handleError<Vendedor>('Agregar vendedor'))
     )
-  }
-
-  getLocalidades():Observable<Localidad[]> {
-    const url = `${this.url}/localidades/todas`
-    return this.http.get<Localidad[]>(url)
   }
 
   getImage(id: number):Observable<any> {
