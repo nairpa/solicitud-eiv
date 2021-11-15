@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable,tap } from 'rxjs';
+import { tap } from 'rxjs';
 import { Localidad } from 'src/app/models/localidad';
 import { Vendedor } from 'src/app/models/vendedore';
 import { LocalidadService } from 'src/app/services/localidad.service';
@@ -93,11 +93,23 @@ export class AddEditVendedorComponent implements OnInit {
   putVendedor(id: number, vendedor: Vendedor) {
     if(!this.myForm.valid) return;
     this.vendedorService.putVendedor(id, vendedor).subscribe()
+    if(this.selectedFile) {
+      this.vendedorService.postImage(id, this.selectedFile.file).subscribe()
+    }
     this.router.navigate(['/'])
   }
 
   selectImage(event: any) {
+    const reader = new FileReader();
     this.file = event.target.files[0];
+
+    if(this.file) {
+      reader.readAsDataURL(this.file);
+      reader.onload = () => {
+        this.selectedFile = new ImageSnippet(event.target.result, this.file);
+        this.avatarImg = reader.result;
+      }
+    }
   }
 
   createImageFromBlob(image: Blob) {
@@ -110,16 +122,4 @@ export class AddEditVendedorComponent implements OnInit {
        reader.readAsDataURL(image);
     }
   }
-
-  postImage(id: number) {
-    const reader = new FileReader()
-
-    reader.addEventListener('load', (event: any) => {
-      this.selectedFile = new ImageSnippet(event.target.result, this.file);
-
-      this.vendedorService.postImage(id, this.selectedFile.file).subscribe()
-    })
-    reader.readAsDataURL(this.file);
-  }
-
 }

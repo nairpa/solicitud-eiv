@@ -4,9 +4,6 @@
   </div>
   <div class='flex-container-img'>
     <input class='input-file' *ngIf='action === "Editar"' type='file' accept="image/*" (change)="selectImage($event)">
-    <button class='btn-save' *ngIf='action === "Editar"' (click)='postImage(idVendedor)' mat-icon-button>
-      <mat-icon color='primary' aria-hidden="false" aria-label="edit-icon">save</mat-icon>
-    </button>
   </div>
   <form [formGroup]="myForm" (submit)='action === "Crear" ? addVendedor(myForm.value) : putVendedor(idVendedor, myForm.value)'>
     <div class='flex-container'>
