@@ -40,10 +40,10 @@ export class AddEditVendedorComponent implements OnInit {
   ) {
     const currentYear = new Date().getFullYear();
     const currentMonth = new Date().getMonth();
-    const currentDay = new Date().getDay();
+    const currentDay = new Date().getDate();
 
-    this.minDate = new Date(currentYear - 66, currentMonth + 1, currentDay - 15);
-    this.maxDate = new Date(currentYear - 18, currentMonth, currentDay + 14);
+    this.minDate = new Date(currentYear - 66, currentMonth, currentDay + 1);
+    this.maxDate = new Date(currentYear - 18, currentMonth, currentDay);
 
     this.myForm = this.formBuilder.group({
       nombre: ['', Validators.required],
