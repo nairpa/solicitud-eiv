@@ -15,7 +15,7 @@ import { MatNativeDateModule } from '@angular/material/core'
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCardModule } from '@angular/material/card';
-
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 
 @NgModule({
   declarations: [],
@@ -36,7 +36,7 @@ import { MatCardModule } from '@angular/material/card';
     MatSelectModule,
     MatCardModule,
   ],
-  providers: [{provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'fill'}}],
+  providers: [{provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'fill'}}, {provide: MAT_DATE_LOCALE, useValue: 'en-GB'}],
   exports: [
     MatTableModule,
     MatPaginatorModule,

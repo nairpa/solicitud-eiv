@@ -39,8 +39,11 @@ export class AddEditVendedorComponent implements OnInit {
     public snackBar: MatSnackBar
   ) {
     const currentYear = new Date().getFullYear();
-    this.minDate = new Date(currentYear - 65, 0, 1);
-    this.maxDate = new Date(currentYear - 18, 11, 31);
+    const currentMonth = new Date().getMonth();
+    const currentDay = new Date().getDay();
+
+    this.minDate = new Date(currentYear - 66, currentMonth + 1, currentDay - 15);
+    this.maxDate = new Date(currentYear - 18, currentMonth, currentDay + 14);
 
     this.myForm = this.formBuilder.group({
       nombre: ['', Validators.required],
