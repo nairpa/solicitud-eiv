@@ -15,7 +15,8 @@ import { MatNativeDateModule } from '@angular/material/core'
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCardModule } from '@angular/material/card';
-import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
+import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 
 @NgModule({
   declarations: [],
@@ -36,7 +37,12 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
     MatSelectModule,
     MatCardModule,
   ],
-  providers: [{provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'fill'}}, {provide: MAT_DATE_LOCALE, useValue: 'en-GB'}],
+  providers: [{provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'fill'}}, {provide: MAT_DATE_LOCALE, useValue: 'en-GB'}, {
+    provide: DateAdapter,
+    useClass: MomentDateAdapter,
+    deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS],
+  },
+  {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},],
   exports: [
     MatTableModule,
     MatPaginatorModule,

@@ -1,9 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Vendedor } from 'src/app/models/vendedore';
 import { VendedorService } from 'src/app/services/vendedor.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MessageComponent } from '../shared/message/message.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { tap } from 'rxjs';
+import * as dayjs from 'dayjs';
 
 @Component({
   selector: 'app-list-vendedor',
@@ -15,6 +17,8 @@ export class ListVendedorComponent implements OnInit {
   displayedColumns: string[] = ['id', 'nombre', 'usuarioLogin', 'localidad', 'habilitado', 'fechaNacimiento', 'observaciones', 'acciones' ];
   vendedores: Vendedor[] = []
   showDialog: boolean = false;
+  date!: any;
+
   constructor(private _vendedorService: VendedorService, public dialog: MatDialog, public snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
@@ -22,7 +26,9 @@ export class ListVendedorComponent implements OnInit {
   }
 
   getAllVendedores() {
-    this._vendedorService.getVendedores().subscribe(data => this.vendedores = data);
+    this._vendedorService.getVendedores()
+    .pipe(tap(e => this.date = e.map(v => dayjs(v.fechaNacimiento).format('DD-MM-YYYY'))))
+    .subscribe(data => this.vendedores = data);
   }
 
   openDialog(id: number): void {

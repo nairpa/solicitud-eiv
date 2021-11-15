@@ -20,7 +20,7 @@
     </div>
     <mat-form-field appearance="fill">
       <mat-label>Fecha de nacimiento</mat-label>
-      <input formControlName='fechaNacimiento' [min]='minDate' [max]='maxDate' matInput required [matDatepicker]="picker">
+      <input matInput [matDatepicker]="picker" formControlName='fechaNacimiento' [min]='minDate' [max]='maxDate' required >
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
       <mat-error>Debe seleccionar una fecha de nacimiento</mat-error>
